@@ -1,0 +1,7 @@
+.profile-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;         /* same as Tailwind's rounded-circle */
+  border: 4px solid white;    /* same as border-white border-4 */
+}
