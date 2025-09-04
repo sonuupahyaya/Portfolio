@@ -1,7 +1,152 @@
+/* General Styles */
+body {
+  font-family: "Poppins", sans-serif;
+  background: url("https://www.transparenttextures.com/patterns/dark-mosaic.png"),
+    linear-gradient(135deg, #0d1117, #121826);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero / Header */
+.hero-section {
+  min-height: 100vh;
+  padding: 3rem 0;
+  background: rgba(15, 32, 39, 0.4); /* more transparent */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .profile-image {
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   object-fit: cover;
-  border-radius: 50%;         /* same as Tailwind's rounded-circle */
-  border: 4px solid white;    /* same as border-white border-4 */
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.6); /* softer border */
+  box-shadow: 0 6px 20px rgba(0, 255, 200, 0.3);
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, #00f5d4, #00bbf9, #9b5de5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Social Icons */
+.social-icon {
+  font-size: 2rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.social-icon:hover {
+  color: #00f5d4;
+  transform: scale(1.2);
+}
+
+/* Sections */
+.section-dark,
+.section-gradient,
+.section-light {
+  padding: 5rem 0;
+  background: rgba(18, 24, 38, 0.35); /* lighter transparency */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+/* Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05); /* more transparent */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-card:hover {
+  box-shadow: 0px 6px 25px rgba(0, 255, 200, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Projects */
+.project-card {
+  background: rgba(28, 44, 57, 0.35); /* transparent */
+  padding: 2rem;
+  border-radius: 1rem;
+  color: #fff;
+  text-align: left;
+  height: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.project-card:hover {
+  background: rgba(0, 255, 200, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 255, 200, 0.35);
+  transform: translateY(-4px);
+}
+
+/* Buttons */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+/* Primary Light Button */
+.btn-glow {
+  background: rgba(255, 255, 255, 0.9); /* slightly transparent */
+  color: #232f4c;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+.btn-glow:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+/* Gradient Button (used for BOTH AI/Data Science & Software Development) */
+.btn-gradient,
+.btn-software {
+  background: linear-gradient(135deg, #00f5d4, #00bbf9, #9b5de5); /* brighter angle */
+  color: #ffffff;  /* white text for readability */
+  border: none;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 255, 200, 0.35); /* glowing effect */
+}
+
+.btn-gradient:hover,
+.btn-software:hover {
+  opacity: 0.95;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 255, 200, 0.45);
+}
+
+/* Footer */
+.footer-gradient {
+  background: rgba(156, 147, 194, 0.35); /* more transparent */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(221, 204, 204, 0.08);
+  padding: 2rem 0;
+  text-align: center;
 }
