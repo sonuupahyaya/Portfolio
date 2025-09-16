@@ -7,29 +7,12 @@ function App() {
     <div>
       {/* HEADER */}
       <header className="hero-section d-flex align-items-center text-white text-center">
-        <div className="container d-flex flex-column flex-md-row align-items-center justify-content-between">
-          {/* Left: Socials */}
+        <div className="container d-flex flex-column align-items-center justify-content-center">
+          
+          {/* Profile + Socials beside photo */}
           <div className="d-flex align-items-center gap-4">
-            <a
-              href="https://github.com/sonuupahyaya"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-            >
-              <i className="bi bi-github"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/sonukumar102/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-            >
-              <i className="bi bi-linkedin"></i>
-            </a>
-          </div>
-
-          {/* Profile */}
-          <div className="text-center">
+            
+            {/* Profile Image */}
             <motion.img
               src="/photo.jpg"
               alt="My Photo"
@@ -38,30 +21,52 @@ function App() {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8 }}
             />
+
+            {/* Social Icons (horizontal row, right of photo) */}
+            <div className="d-flex flex-row align-items-center gap-3">
+              <a
+                href="https://github.com/sonuupahyaya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
+                <i className="bi bi-github"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/sonukumar102/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
+                <i className="bi bi-linkedin"></i>
+              </a>
+              <a
+                href="https://leetcode.com/u/Sonu_upadhyaya/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
+                <i className="bi bi-code-slash"></i>
+              </a>
+              <a
+                href="https://www.hackerrank.com/profile/sonujack102"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
+                <i className="bi bi-terminal"></i>
+              </a>
+            </div>
+          </div>
+
+          {/* Name and Title */}
+          <div className="text-center mt-3">
             <h1 className="display-4 fw-bold">
               Hi, I'm <span className="text-gradient">Sonu Kumar</span>
             </h1>
-            <p className="lead">Software Developer | Data Scientist | AI & ML Engineer</p>
-          </div>
-
-          {/* Right: Coding Profiles */}
-          <div className="d-flex align-items-center gap-4">
-            <a
-              href="https://leetcode.com/u/Sonu_upadhyaya/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-            >
-              <i className="bi bi-code-slash"></i>
-            </a>
-            <a
-              href="https://www.hackerrank.com/profile/sonujack102"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-            >
-              <i className="bi bi-terminal"></i>
-            </a>
+            <p className="lead">
+              Software Developer | Data Scientist | AI & ML Engineer
+            </p>
           </div>
         </div>
       </header>
