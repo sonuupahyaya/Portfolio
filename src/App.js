@@ -135,103 +135,112 @@ function App() {
           </div>
         </div>
       </section>
-
-      {/* PROJECTS */}
-      <section className="section-gradient">
-        <div className="container">
-          <h2 className="section-title text-white">🚀 Featured Projects</h2>
-          <div className="row">
-            {[
-              {
-                title: "💼 Data Science Salary Predictor",
-                desc: "Predicts Data Science salaries using XGBoost model. Input job details, get instant salary estimates.",
-                tech: "Python, Pandas, XGBoost, Streamlit",
-                live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/",
-                github: "https://github.com/sonuupahyaya/Salary-Predictor",
-              },
-              {
-                title: "📊 Demand Forecasting Web App",
-                desc: "Forecasts demand with Prophet/ARIMA & interactive dashboards for inventory optimization.",
-                tech: "Streamlit, Prophet, ARIMA, Pandas",
-                live: "https://demandforecastproject-thqparu4ibghczx4ooxpmc.streamlit.app/",
-                github: "https://github.com/sonuupahyaya/demand_forecast_project",
-              },
-              {
-                title: "🚢 Titanic Survival Predictor",
-                desc: "Predicts passenger survival on Titanic using Logistic Regression with Streamlit interface.",
-                tech: "Python, Pandas, Scikit-learn, Streamlit",
-                live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/",
-                github: "https://github.com/sonuupahyaya/titanic-survival-predictor",
-              },
-              {
-                title: "🍽️ Restaurant Management System",
-                desc: "Django-based restaurant management app with menu, booking, and order tracking.",
-                tech: "Django, Python, SQLite, HTML, CSS, Bootstrap",
-                github: "https://github.com/sonuupahyaya/restaurant_management_project",
-              },
-              {
-                title: "💳 Credit Card Fraud Detection",
-                desc: "ML model for detecting fraudulent transactions with SMOTE and classifiers.",
-                tech: "Python, Pandas, Scikit-learn, SMOTE",
-                github: "https://github.com/sonuupahyaya/Credit-Card-Fraud-Detection-Model",
-              },
-              {
-                title: "📈 Customer Revenue Dashboard",
-                desc: "Interactive dashboard analyzing customer revenue, trends, segmentation, KPIs.",
-                tech: "Python, Pandas, Matplotlib, Seaborn, Jupyter",
-                github: "https://github.com/sonuupahyaya/Customer-Revenue-Dashboard",
-              },
-              {
-                title: "🛒 Gatsby E-Commerce Theme",
-                desc: "Customizable e-commerce theme built with GatsbyJS & GraphQL.",
-                tech: "GatsbyJS, React, GraphQL, CSS",
-                live: "https://gatsby-ecommerce-theme.netlify.app/",
-                github: "https://github.com/sonuupahyaya/gatsby-ecommerce-theme",
-              },
-              {
-                title: "📝 Note App Project",
-                desc: "Full-stack note-taking app with CRUD features, deployed on Render.",
-                tech: "Node.js, Express, MongoDB, EJS",
-                live: "https://note-app-project-1.onrender.com",
-                github: "https://github.com/sonuupahyaya/note_app_project",
-              },
-            ].map((proj, i) => (
-              <div className="col-md-4 mb-4" key={i}>
-                <motion.div
-                  className="project-card text-light"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.05 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4 }}
+{/* PROJECTS */}
+<section className="section-gradient py-16">
+  <div className="container">
+    <h2 className="section-title text-white mb-10 text-center">🚀 Featured Projects</h2>
+    <div className="row">
+      {[
+        {
+          title: "💼 Data Science Salary Predictor",
+          desc: "Predicts Data Science salaries using XGBoost model. Input job details, get instant salary estimates.",
+          tech: "Python, Pandas, XGBoost, Streamlit",
+          live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/",
+          github: "https://github.com/sonuupahyaya/Salary-Predictor",
+        },
+        {
+          title: "📊 Demand Forecasting Web App",
+          desc: "Forecasts demand with Prophet/ARIMA & interactive dashboards for inventory optimization.",
+          tech: "Streamlit, Prophet, ARIMA, Pandas",
+          live: "https://demandforecastproject-thqparu4ibghczx4ooxpmc.streamlit.app/",
+          github: "https://github.com/sonuupahyaya/demand_forecast_project",
+        },
+        {
+          title: "🚢 Titanic Survival Predictor",
+          desc: "Predicts passenger survival on Titanic using Logistic Regression with Streamlit interface.",
+          tech: "Python, Pandas, Scikit-learn, Streamlit",
+          live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/",
+          github: "https://github.com/sonuupahyaya/titanic-survival-predictor",
+        },
+        {
+          title: "🍽️ Restaurant Management System",
+          desc: "Django-based restaurant management app with menu, booking, and order tracking.",
+          tech: "Django, Python, SQLite, HTML, CSS, Bootstrap",
+          github: "https://github.com/sonuupahyaya/restaurant_management_project",
+        },
+        {
+          title: "💳 Credit Card Fraud Detection",
+          desc: "ML model for detecting fraudulent transactions with SMOTE and classifiers.",
+          tech: "Python, Pandas, Scikit-learn, SMOTE",
+          github: "https://github.com/sonuupahyaya/Credit-Card-Fraud-Detection-Model",
+        },
+        {
+          title: "📈 Customer Revenue Dashboard",
+          desc: "Interactive dashboard analyzing customer revenue, trends, segmentation, KPIs.",
+          tech: "Python, Pandas, Matplotlib, Seaborn, Jupyter",
+          github: "https://github.com/sonuupahyaya/Customer-Revenue-Dashboard",
+        },
+        {
+          title: "🛒 Gatsby E-Commerce Theme",
+          desc: "Customizable e-commerce theme built with GatsbyJS & GraphQL.",
+          tech: "GatsbyJS, React, GraphQL, CSS",
+          live: "https://gatsby-ecommerce-theme.netlify.app/",
+          github: "https://github.com/sonuupahyaya/gatsby-ecommerce-theme",
+        },
+        {
+          title: "📝 Note App Project",
+          desc: "Full-stack note-taking app with CRUD features, deployed on Render.",
+          tech: "Node.js, Express, MongoDB, EJS",
+          live: "https://note-app-project-1.onrender.com",
+          github: "https://github.com/sonuupahyaya/note_app_project",
+        },
+        {
+          title: "⚖️ Legal Aid App",
+          desc: "A modern React-based platform connecting users to legal aid services with chat & case management.",
+          tech: "React, Tailwind CSS, Framer Motion, Firebase",
+          live: "https://legal-aid-app-three.vercel.app/",
+          github: "https://github.com/sonuupahyaya/legal-aid-app",
+        },
+      ].map((proj, i) => (
+        <div className="col-md-4 mb-4" key={i}>
+          <motion.div
+            className="project-card text-light p-4 rounded-2xl shadow-lg bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <h5 className="mb-2">{proj.title}</h5>
+            <p className="mb-3">{proj.desc}</p>
+            <p className="small text-light mb-3">Tech: {proj.tech}</p>
+            <div className="d-flex gap-2">
+              {proj.live && (
+                <a
+                  href={proj.live}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-glow"
                 >
-                  <h5>{proj.title}</h5>
-                  <p>{proj.desc}</p>
-                  <p className="small text-light">Tech: {proj.tech}</p>
-                  {proj.live && (
-                    <a
-                      href={proj.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn btn-glow me-2"
-                    >
-                      Live
-                    </a>
-                  )}
-                  <a
-                    href={proj.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-outline-light"
-                  >
-                    GitHub
-                  </a>
-                </motion.div>
-              </div>
-            ))}
-          </div>
+                  Live
+                </a>
+              )}
+              <a
+                href={proj.github}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-outline-light"
+              >
+                GitHub
+              </a>
+            </div>
+          </motion.div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
 {/* CV */}
 <section className="section-light text-center">
   <h3 className="fw-bold mb-3">📄 View / Download My CV</h3>
