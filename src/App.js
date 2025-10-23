@@ -1,273 +1,490 @@
-import React from "react";
-import { motion } from "framer-motion";
-import "./App.css";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-function App() {
+// Icons using Lucide React
+import {
+  Github, Linkedin, Code, Terminal, CheckCircle, GraduationCap,
+  Award, Briefcase, ChevronRight, Zap, Globe, Download, TrendingUp, Cpu
+} from 'lucide-react';
+
+// --- Data Definitions ---
+
+const hardSkills = [
+  { name: "Python / Data Science", percent: 95, color: "cyan" },
+  { name: "AI/ML (XGBoost, Pytorch)", percent: 90, color: "magenta" },
+  { name: "React / Frontend Dev", percent: 85, color: "blue" },
+  { name: "Web Frameworks (Django/Flask)", percent: 80, color: "pink" },
+  { name: "Databases (SQL/NoSQL)", percent: 75, color: "green" },
+  { name: "DevOps/Cloud (Git, Docker)", percent: 70, color: "yellow" },
+];
+
+const projects = [
+  { title: "💼 Data Science Salary Predictor", desc: "Predicts DS salaries using XGBoost model. Input job details, get instant salary estimates.", tech: "Python, Pandas, XGBoost, Streamlit", live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/", github: "https://github.com/sonuupahyaya/Salary-Predictor", icon: Briefcase },
+  { title: "📊 Demand Forecasting Web App", desc: "Forecasts demand with Prophet/ARIMA & interactive dashboards for inventory optimization.", tech: "Streamlit, Prophet, ARIMA, Pandas", live: "https://demandforecastproject-thqparu4ibghczx4ooxpmc.streamlit.app/", github: "https://github.com/sonuupahyaya/demand_forecast_project", icon: TrendingUp },
+  { title: "🚢 Titanic Survival Predictor", desc: "Predicts passenger survival using Logistic Regression with Streamlit interface.", tech: "Python, Scikit-learn, Streamlit", live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/", github: "https://github.com/sonuupahyaya/titanic-survival-predictor", icon: Terminal },
+  { title: "🍽️ Restaurant Management System", desc: "Django-based restaurant management app with menu, booking, and order tracking.", tech: "Django, Python, SQLite", github: "https://github.com/sonuupahyaya/restaurant_management_project", icon: Code },
+  { title: "💳 Credit Card Fraud Detection", desc: "ML model for detecting fraudulent transactions with SMOTE and classifiers.", tech: "Python, Pandas, Scikit-learn", github: "https://github.com/sonuupahyaya/Credit-Card-Fraud-Detection-Model", icon: Award },
+];
+
+// --- Utility Components ---
+
+// Skill Item component with 3D animation effect
+const SkillBar3D = ({ skill, delay }) => {
+  const { name, percent, color } = skill;
+  
+  // Dynamic tailwind class mapping for colors and glow
+  const colorMap = {
+    cyan: { text: 'text-cyan-400', bar: 'bg-cyan-500', glow: 'shadow-cyan-900/50' },
+    magenta: { text: 'text-fuchsia-400', bar: 'bg-fuchsia-500', glow: 'shadow-fuchsia-900/50' },
+    blue: { text: 'text-indigo-400', bar: 'bg-indigo-500', glow: 'shadow-indigo-900/50' },
+    pink: { text: 'text-pink-400', bar: 'bg-pink-500', glow: 'shadow-pink-900/50' },
+    green: { text: 'text-green-400', bar: 'bg-green-500', glow: 'shadow-green-900/50' },
+    yellow: { text: 'text-yellow-400', bar: 'bg-yellow-500', glow: 'shadow-yellow-900/50' },
+  };
+  const c = colorMap[color] || colorMap.blue;
+
   return (
-    <div>
-      {/* HEADER */}
-      <header className="hero-section d-flex align-items-center text-white text-center">
-        <div className="container d-flex flex-column align-items-center justify-content-center">
+    <motion.div
+      className="mb-4 bg-gray-800/50 p-3 rounded-xl border border-gray-700/50 transition-all duration-200"
+      initial={{ opacity: 0, x: -50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.6, delay: delay }}
+      
+      // Stronger 3D Hover Effect
+      whileHover={{ 
+        scale: 1.05,
+        rotateY: 4,
+        rotateX: 4,
+        boxShadow: `0 15px 40px ${c.bar.replace('bg-', 'rgba(').replace('-500', ', 0.6').replace('cyan', '52, 211, 255').replace('fuchsia', '232, 121, 220').replace('indigo', '99, 102, 241').replace('pink', '236, 72, 153').replace('green', '16, 185, 129').replace('yellow', '250, 204, 21')}')`,
+        y: -5, // Lift off the surface
+        transition: { duration: 0.2 }
+      }}
+      style={{ transformStyle: 'preserve-3d' }}
+    >
+      <div className="flex justify-between items-center mb-1">
+        <span className={`text-sm font-semibold ${c.text}`}>{name}</span>
+        <span className={`text-xs font-bold text-gray-300`}>{percent}%</span>
+      </div>
+      <div className="w-full bg-gray-900 rounded-full h-2.5">
+        <motion.div
+          className={`h-2.5 rounded-full shadow-lg ${c.bar} ${c.glow}`}
+          initial={{ width: '0%' }}
+          whileInView={{ width: `${percent}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: 'easeOut', delay: delay + 0.5 }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+// Project Card Component with Code/Terminal Aesthetic
+const ProjectCard = ({ proj, i }) => {
+  const Icon = proj.icon;
+  
+  return (
+    <motion.div
+      key={i}
+      className="project-card p-6 rounded-2xl shadow-2xl flex flex-col justify-between border border-gray-700/50 hover:border-cyan-500/50"
+      initial={{ opacity: 0, scale: 0.9, y: 30 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      whileHover={{ 
+        scale: 1.05, 
+        y: -8, // Stronger lift
+        boxShadow: '0 0 50px rgba(52, 211, 255, 0.4)', // Cyan glow
+        transition: { duration: 0.3 }
+      }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, delay: i * 0.1 }}
+    >
+      <div className='relative'>
+        <Icon className="w-8 h-8 mb-4 text-cyan-400/90" />
+        <h5 className="text-2xl font-bold mb-3 text-white">{proj.title}</h5>
+        <p className="mb-4 text-gray-400 text-sm italic">{proj.desc}</p>
+        <p className="text-magenta-400 font-medium text-xs rounded-full inline-block p-1 px-3 bg-gray-800/80 border border-magenta-500/30">Tech: {proj.tech}</p>
+      </div>
+
+      <div className="flex gap-4 mt-6">
+        {proj.live && (
+          <a
+            href={proj.live}
+            target="_blank"
+            rel="noreferrer"
+            className="px-5 py-2 text-sm font-bold rounded-full text-white btn-live-glow transition"
+          >
+            <Globe className="w-4 h-4 inline mr-1" /> View Live
+          </a>
+        )}
+        <a
+          href={proj.github}
+          target="_blank"
+          rel="noreferrer"
+          className="px-5 py-2 text-sm font-bold rounded-full border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition"
+        >
+          <Github className="w-4 h-4 inline mr-1" /> Codebase
+        </a>
+      </div>
+    </motion.div>
+  );
+};
+
+
+// --- Main App Component ---
+
+const App = () => {
+  const [rotation, setRotation] = React.useState({ x: 0, y: 0 });
+
+  // Mouse tilt effect logic
+  const handleMouseMove = (e) => {
+    // Get viewport dimensions
+    const { innerWidth: width, innerHeight: height } = window;
+    
+    // Normalize mouse position to range [-1, 1]
+    const x = (e.clientX / width) * 2 - 1;
+    const y = (e.clientY / height) * 2 - 1;
+
+    // Apply a subtle rotation amount (max 2 degrees)
+    const tiltX = -y * 2; // Invert Y for a natural feel (pulling the top edge closer)
+    const tiltY = x * 2; 
+
+    setRotation({ x: tiltX, y: tiltY }); 
+  };
+
+  React.useEffect(() => {
+    // Only apply the mouse move listener in the client environment
+    if (typeof window !== 'undefined') {
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-black text-gray-100 font-inter main-grid-background relative overflow-x-hidden">
+
+      {/* GLOBAL STYLES (CRITICAL FOR VISUAL EFFECTS) */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
           
-          {/* Profile + Socials beside photo */}
-          <div className="d-flex align-items-center gap-4">
-            
-            {/* Profile Image */}
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Animated Grid Background */
+        .main-grid-background {
+          background-color: #000000;
+          background-image: linear-gradient(to right, rgba(50, 50, 50, 0.06) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(50, 50, 50, 0.06) 1px, transparent 1px);
+          background-size: 50px 50px;
+          animation: background-pan 90s linear infinite;
+          background-blend-mode: overlay;
+        }
+        @keyframes background-pan {
+          from { background-position: 0% 0%; }
+          to { background-position: 500px 500px; }
+        }
+
+        /* Hero Section Gradient - Atmospheric Glow */
+        .hero-section {
+          background-image: radial-gradient(at 10% 80%, rgba(30, 27, 75, 0.4) 0%, transparent 60%),
+                            radial-gradient(at 90% 20%, rgba(76, 29, 149, 0.3) 0%, transparent 60%),
+                            linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0));
+          min-height: 100vh;
+        }
+
+        /* Neon/Holographic Text Glow */
+        .neon-glow-heading {
+          text-shadow: 0 0 10px rgba(52, 211, 255, 0.8), 0 0 35px rgba(236, 72, 153, 0.5);
+          animation: glitch-text 4s infinite linear alternate;
+        }
+        
+        /* Subtle Glitch Text Effect */
+        @keyframes glitch-text {
+          0%, 100% { clip-path: inset(0 0 0 0); }
+          20% { clip-path: inset(3% 0 3% 0); }
+          40% { clip-path: inset(1% 0 1% 0); }
+          60% { clip-path: inset(5% 0 5% 0); }
+          80% { clip-path: inset(0.5% 0 0.5% 0); }
+        }
+
+        /* Profile Image - Holographic Ring */
+        .profile-image {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 4px solid #06b6d4; /* Cyan-500 */
+          box-shadow: 0 0 30px rgba(6, 182, 212, 1), inset 0 0 15px rgba(236, 72, 153, 0.5);
+          transition: all 0.5s ease;
+        }
+        .profile-image:hover {
+            box-shadow: 0 0 50px rgba(236, 72, 153, 1), inset 0 0 15px rgba(6, 182, 212, 0.5); 
+            transform: scale(1.05);
+        }
+
+        /* Project Card Styling - Frosted Glass Effect */
+        .project-card {
+          background: rgba(17, 24, 39, 0.8); /* Darker, slightly transparent */
+          backdrop-filter: blur(10px); /* Frosted glass */
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Live Demo Button Glow */
+        .btn-live-glow {
+          background: linear-gradient(90deg, #06b6d4, #ec4899); /* Cyan to Pink */
+          box-shadow: 0 4px 20px rgba(6, 182, 212, 0.6);
+          transition: all 0.3s ease;
+        }
+        .btn-live-glow:hover {
+          box-shadow: 0 0 30px #ec4899, 0 0 20px #06b6d4;
+          transform: translateY(-4px);
+        }
+
+        /* Contact Button Glowing Border (Conic Gradient) */
+        .btn-contact {
+            background-color: #000000;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-contact::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent 0deg, transparent 180deg, #06b6d4 180deg, #ec4899 360deg);
+            z-index: -1;
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes rotate { to { transform: rotate(1turn); } }
+        .btn-contact:hover::before { animation: rotate 1s linear infinite; }
+        .btn-contact::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background-color: #000000;
+            border-radius: 0.75rem; /* rounded-xl */
+            z-index: -1;
+        }
+      `}</style>
+
+      {/* MAIN CONTENT WRAPPER FOR 3D MOUSE TILT */}
+      <div 
+        className="transform-gpu will-change-transform"
+        style={{
+            transform: `perspective(1500px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+            transition: 'transform 0.5s ease-out',
+        }}
+      >
+
+        {/* HEADER: HERO SECTION */}
+        <header className="hero-section flex flex-col items-center justify-center pt-32 pb-20 px-4 relative z-10">
+          <div className="max-w-6xl w-full flex flex-col items-center justify-center relative z-20">
             <motion.img
-              src="/photo.jpg"
-              alt="My Photo"
-              className="profile-image mb-3"
-              initial={{ scale: 0.8, opacity: 0 }}
+              src="https://placehold.co/180x180/0d0c1d/ffffff?text=SK"
+              alt="Sonu Kumar Photo"
+              className="profile-image mb-8"
+              initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
+              onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/180x180/0d0c1d/ffffff?text=SK"; }}
             />
 
-            {/* Social Icons (horizontal row, right of photo) */}
-            <div className="d-flex flex-row align-items-center gap-3">
-              <a
-                href="https://github.com/sonuupahyaya"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
+            {/* Name and Title */}
+            <div className="text-center mb-6">
+              <motion.h1
+                className="text-6xl lg:text-9xl font-black mb-4 leading-tight neon-glow-heading"
+                initial={{ y: -30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.7 }}
               >
-                <i className="bi bi-github"></i>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/sonukumar102/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-magenta-500">
+                  Sonu Kumar
+                </span>
+              </motion.h1>
+              <motion.p
+                className="text-2xl lg:text-4xl text-gray-300 font-extralight max-w-4xl mx-auto tracking-wider flex items-center justify-center"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
               >
-                <i className="bi bi-linkedin"></i>
-              </a>
-              <a
-                href="https://leetcode.com/u/Sonu_upadhyaya/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
+                 <Cpu className='w-6 h-6 mr-3 text-cyan-400'/> AI, ML & Full-Stack Development //
+              </motion.p>
+            </div>
+
+            {/* Social Icons & CTA */}
+            <div className="flex flex-col items-center gap-8 mt-10">
+              <div className="flex gap-8">
+                <motion.a whileHover={{ scale: 1.5, color: '#06b6d4' }} href="https://github.com/sonuupahyaya" target="_blank" rel="noopener noreferrer" className="text-gray-500 transition duration-300">
+                  <Github className="w-8 h-8" />
+                </motion.a>
+                <motion.a whileHover={{ scale: 1.5, color: '#ec4899' }} href="https://www.linkedin.com/in/sonukumar102/" target="_blank" rel="noopener noreferrer" className="text-gray-500 transition duration-300">
+                  <Linkedin className="w-8 h-8" />
+                </motion.a>
+                <motion.a whileHover={{ scale: 1.5, color: '#34d399' }} href="https://leetcode.com/u/Sonu_upadhyaya/" target="_blank" rel="noopener noreferrer" className="text-gray-500 transition duration-300">
+                  <Code className="w-8 h-8" />
+                </motion.a>
+                <motion.a whileHover={{ scale: 1.5, color: '#facc15' }} href="https://www.hackerrank.com/profile/sonujack102" target="_blank" rel="noopener noreferrer" className="text-gray-500 transition duration-300">
+                  <Terminal className="w-8 h-8" />
+                </motion.a>
+              </div>
+
+              <motion.a
+                href="mailto:upadhyayasonu41@gmail.com"
+                className="btn-contact px-12 py-4 text-xl font-extrabold rounded-xl text-white shadow-2xl shadow-cyan-900/50"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5, type: "spring" }}
               >
-                <i className="bi bi-code-slash"></i>
-              </a>
-              <a
-                href="https://www.hackerrank.com/profile/sonujack102"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-icon"
-              >
-                <i className="bi bi-terminal"></i>
-              </a>
+                <Zap className="w-5 h-5 inline mr-3 text-cyan-400" />
+                INITIATE CONNECTION
+              </motion.a>
             </div>
           </div>
+        </header>
 
-          {/* Name and Title */}
-          <div className="text-center mt-3">
-            <h1 className="display-4 fw-bold">
-              Hi, I'm <span className="text-gradient">Sonu Kumar</span>
-            </h1>
-            <p className="lead">
-              Software Developer | Data Scientist | AI & ML Engineer
+        {/* --- ABOUT & 3D SKILLS SECTION --- */}
+        <section className="relative py-20 lg:py-32 bg-black border-t border-gray-900">
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+
+            <motion.h2
+              className="text-5xl font-black text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-magenta-400"
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              // SKILL MATRIX & CREDENTIALS
+            </motion.h2>
+
+            <div className="grid lg:grid-cols-12 gap-10">
+
+              {/* Left Column: Skills Display - Perspective parent container */}
+              <motion.div
+                className="lg:col-span-7 p-8 rounded-3xl project-card border border-cyan-500/20"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ perspective: 1200 }} // Enable strong 3D transform on children
+              >
+                <h3 className="text-3xl font-bold mb-8 text-cyan-400 flex items-center">
+                  <Code className="w-6 h-6 mr-3" /> Core Technical Proficiencies 
+                </h3>
+                {hardSkills.map((skill, index) => (
+                  <SkillBar3D key={skill.name} skill={skill} delay={index * 0.1} />
+                ))}
+              </motion.div>
+
+              {/* Right Column: Credentials/Certs */}
+              <motion.div
+                className="lg:col-span-5 p-8 rounded-3xl project-card border border-magenta-500/20"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <h3 className="text-3xl font-bold mb-8 text-magenta-400 flex items-center">
+                  <GraduationCap className="w-6 h-6 mr-3" /> Trajectory & Degrees
+                </h3>
+                
+                <ul className="space-y-4 mb-8 border-l-4 border-gray-700 pl-4">
+                  <li className="text-lg text-gray-200">
+                    <span className="font-bold text-white">MCA, Lovely Professional University</span>
+                    <p className="text-sm text-gray-400">Master of Computer Applications</p>
+                  </li>
+                  <li className="text-lg text-gray-200">
+                    <span className="font-bold text-white">BCA, Lovely Professional University</span>
+                    <p className="text-sm text-gray-400">Bachelor of Computer Applications</p>
+                  </li>
+                </ul>
+                
+                <h3 className="text-2xl font-bold mb-4 text-cyan-400 flex items-center mt-8">
+                  <Award className="w-5 h-5 mr-3" /> Certifications
+                </h3>
+                <div className="flex flex-wrap gap-3 ml-4">
+                  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center"><CheckCircle className="w-3 h-3 mr-1" /> Python (GFG)</span>
+                  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center"><CheckCircle className="w-3 h-3 mr-1" /> Java (GFG)</span>
+                  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center"><CheckCircle className="w-3 h-3 mr-1" /> Django (BI)</span>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+        {/* --- END ABOUT & 3D SKILLS SECTION --- */}
+
+
+        {/* PROJECTS */}
+        <section className="py-20 bg-black border-t border-gray-900">
+          <div className="max-w-7xl mx-auto px-6">
+            <h2 className="text-5xl font-black text-white mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-magenta-400 to-cyan-400">
+              PROJECT DATABASES 
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((proj, i) => (
+                <ProjectCard key={i} proj={proj} i={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CV SECTION */}
+        <section className="relative py-20 text-center bg-black border-t border-gray-900">
+          <div className="max-w-4xl mx-auto px-6">
+            <h3 className="text-4xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-purple-400 to-magenta-400 bg-clip-text text-transparent">
+              [ACCESS_FILE] Download CV
+            </h3>
+
+            <p className="text-gray-400 mb-10 text-lg max-w-2xl mx-auto">
+              Retrieve detailed experience files. Specialized versions available for focused roles.
             </p>
-          </div>
-        </div>
-      </header>
 
-      {/* ABOUT SECTION */}
-      <section className="section-dark text-light">
-        <div className="container">
-          <h2 className="section-title text-gradient">✨ About Me ✨</h2>
-          <p className="lead text-center mb-5 text-light">
-            👋 I’m <strong className="text-gradient">Sonu Kumar</strong> — a passionate
-            <span className="highlight"> Software Developer</span>,
-            <span className="highlight"> Data Scientist</span>, and
-            <span className="highlight"> AI/ML Engineer</span>.  
-            I thrive on building <strong>intelligent applications</strong> and
-            <strong> scalable solutions</strong> powered by <strong>AI/ML</strong>.
-          </p>
-
-          <div className="row g-4">
-            {/* Skills */}
-            <div className="col-md-6">
-              <motion.div
-                className="glass-card text-light"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              >
-                <h5 className="fw-bold mb-3">🛠 Technical Skills</h5>
-                <ul>
-                  <li><strong>Programming:</strong> Python, Java, C++, Arduino</li>
-                  <li><strong>Web:</strong> Django, Flask, Streamlit, React, Node.js</li>
-                  <li><strong>AI/ML:</strong> Scikit-learn, XGBoost, PyTorch, NLP</li>
-                  <li><strong>Data Tools:</strong> Pandas, NumPy, PySpark, Hadoop</li>
-                  <li><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB</li>
-                  <li><strong>Other:</strong> Git, Docker, Leadership, Teamwork</li>
-                </ul>
-              </motion.div>
-            </div>
-
-            {/* Education / Certs / Exp */}
-            <div className="col-md-6">
-              <motion.div
-                className="glass-card text-light"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              >
-                <h5 className="fw-bold mb-3">📚 Education</h5>
-                <ul>
-                  <li>🎓 MCA, Lovely Professional University — <span className="text-info">7.06 CGPA</span></li>
-                  <li>🎓 BCA, Lovely Professional University — <span className="text-info">6.50 CGPA</span></li>
-                </ul>
-
-                <h5 className="fw-bold mt-4 mb-3">📜 Certificates</h5>
-                <ul>
-                  <li>🏅 Python (GFG)</li>
-                  <li>🏅 Java (GFG)</li>
-                  <li>🏅 Django (Board Infinity)</li>
-                  <li>🏅 JavaScript (Board Infinity)</li>
-                </ul>
-
-                <h5 className="fw-bold mt-4 mb-3">💼 Experience</h5>
-                <ul>
-                  <li>🌐 Freelance Web Developer (2024)</li>
-                  <li>🤖 Freelancing AI Projects — Churn Prediction, Resume Screening</li>
-                </ul>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-{/* PROJECTS */}
-<section className="section-gradient py-16">
-  <div className="container">
-    <h2 className="section-title text-white mb-10 text-center">🚀 Featured Projects</h2>
-    <div className="row">
-      {[
-        {
-          title: "💼 Data Science Salary Predictor",
-          desc: "Predicts Data Science salaries using XGBoost model. Input job details, get instant salary estimates.",
-          tech: "Python, Pandas, XGBoost, Streamlit",
-          live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/",
-          github: "https://github.com/sonuupahyaya/Salary-Predictor",
-        },
-        {
-          title: "📊 Demand Forecasting Web App",
-          desc: "Forecasts demand with Prophet/ARIMA & interactive dashboards for inventory optimization.",
-          tech: "Streamlit, Prophet, ARIMA, Pandas",
-          live: "https://demandforecastproject-thqparu4ibghczx4ooxpmc.streamlit.app/",
-          github: "https://github.com/sonuupahyaya/demand_forecast_project",
-        },
-        {
-          title: "🚢 Titanic Survival Predictor",
-          desc: "Predicts passenger survival on Titanic using Logistic Regression with Streamlit interface.",
-          tech: "Python, Pandas, Scikit-learn, Streamlit",
-          live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/",
-          github: "https://github.com/sonuupahyaya/titanic-survival-predictor",
-        },
-        {
-          title: "🍽️ Restaurant Management System",
-          desc: "Django-based restaurant management app with menu, booking, and order tracking.",
-          tech: "Django, Python, SQLite, HTML, CSS, Bootstrap",
-          github: "https://github.com/sonuupahyaya/restaurant_management_project",
-        },
-        {
-          title: "💳 Credit Card Fraud Detection",
-          desc: "ML model for detecting fraudulent transactions with SMOTE and classifiers.",
-          tech: "Python, Pandas, Scikit-learn, SMOTE",
-          github: "https://github.com/sonuupahyaya/Credit-Card-Fraud-Detection-Model",
-        },
-        {
-          title: "📈 Customer Revenue Dashboard",
-          desc: "Interactive dashboard analyzing customer revenue, trends, segmentation, KPIs.",
-          tech: "Python, Pandas, Matplotlib, Seaborn, Jupyter",
-          github: "https://github.com/sonuupahyaya/Customer-Revenue-Dashboard",
-        },
-        {
-          title: "🛒 Gatsby E-Commerce Theme",
-          desc: "Customizable e-commerce theme built with GatsbyJS & GraphQL.",
-          tech: "GatsbyJS, React, GraphQL, CSS",
-          live: "https://gatsby-ecommerce-theme.netlify.app/",
-          github: "https://github.com/sonuupahyaya/gatsby-ecommerce-theme",
-        },
-        {
-          title: "📝 Note App Project",
-          desc: "Full-stack note-taking app with CRUD features, deployed on Render.",
-          tech: "Node.js, Express, MongoDB, EJS",
-          live: "https://note-app-project-1.onrender.com",
-          github: "https://github.com/sonuupahyaya/note_app_project",
-        },
-        {
-          title: "⚖️ Legal Aid App",
-          desc: "A modern React-based platform connecting users to legal aid services with chat & case management.",
-          tech: "React, Tailwind CSS, Framer Motion, Firebase",
-          live: "https://legal-aid-app-three.vercel.app/",
-          github: "https://github.com/sonuupahyaya/legal-aid-app",
-        },
-      ].map((proj, i) => (
-        <div className="col-md-4 mb-4" key={i}>
-          <motion.div
-            className="project-card text-light p-4 rounded-2xl shadow-lg bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <h5 className="mb-2">{proj.title}</h5>
-            <p className="mb-3">{proj.desc}</p>
-            <p className="small text-light mb-3">Tech: {proj.tech}</p>
-            <div className="d-flex gap-2">
-              {proj.live && (
-                <a
-                  href={proj.live}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-glow"
-                >
-                  Live
-                </a>
-              )}
-              <a
-                href={proj.github}
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <motion.a
+                href="https://drive.google.com/file/d/1kiMoKhL7t9U-j6wgYVJSn6-1MyqxJM3X/view?usp=sharing"
                 target="_blank"
                 rel="noreferrer"
-                className="btn btn-outline-light"
+                className="relative px-8 py-3 rounded-xl font-bold text-lg text-white transition-all duration-300
+                  bg-gradient-to-r from-indigo-600 to-purple-700 shadow-xl shadow-indigo-900/40
+                  hover:shadow-indigo-500/60 hover:scale-[1.05] flex items-center justify-center"
+                whileHover={{ scale: 1.05, y: -4 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
               >
-                GitHub
-              </a>
+                <Download className="w-5 h-5 mr-3" />
+                <span>AI / Data Science CV</span>
+              </motion.a>
+
+              <motion.a
+                href="https://drive.google.com/file/d/1GkJ-iJ_l6PLyvyWsSDn4N6t3fMWOdhMl/view?usp=sharing"
+                target="_blank"
+                rel="noreferrer"
+                className="relative px-8 py-3 rounded-xl font-bold text-lg text-white transition-all duration-300
+                  bg-gradient-to-r from-teal-500 to-blue-600 shadow-xl shadow-teal-900/40
+                  hover:shadow-teal-500/60 hover:scale-[1.05] flex items-center justify-center"
+                whileHover={{ scale: 1.05, y: -4 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <Download className="w-5 h-5 mr-3" />
+                <span>Software Development CV</span>
+              </motion.a>
+              
             </div>
-          </motion.div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+          </div>
+        </section>
 
-{/* CV */}
-<section className="section-light text-center">
-  <h3 className="fw-bold mb-3">📄 View / Download My CV</h3>
-  
-  <a
-    href="https://drive.google.com/file/d/1kiMoKhL7t9U-j6wgYVJSn6-1MyqxJM3X/view?usp=sharing"
-    target="_blank"
-    rel="noreferrer"
-    className="btn btn-gradient me-3"
-  >
-    AI / Data Science
-  </a>
-  
-  <a
-    href="https://drive.google.com/file/d/1GkJ-iJ_l6PLyvyWsSDn4N6t3fMWOdhMl/view?usp=sharing"
-    target="_blank"
-    rel="noreferrer"
-    className="btn btn-gradient"
-  >
-    Software Development
-  </a>
-</section>
-
-      {/* FOOTER */}
-      <footer className="py-4 text-center text-white footer-gradient">
-        <p>© 2025 Sonu Upadhyaya. Built with ❤️ using React & Framer Motion</p>
-      </footer>
+        {/* FOOTER */}
+        <footer className="py-8 text-center bg-black border-t border-gray-900">
+          <p className="text-sm text-gray-600">
+            INTERFACE DESIGNED BY <span className="text-cyan-400 font-semibold">SONU KUMAR</span>
+          </p>
+          <p className="text-xs text-gray-700 mt-2">
+            copy; {new Date().getFullYear()}
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
