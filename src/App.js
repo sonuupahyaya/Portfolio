@@ -24,7 +24,14 @@ const projects = [
   { title: "🚢 Titanic Survival Predictor", desc: "Predicts passenger survival using Logistic Regression with Streamlit interface.", tech: "Python, Scikit-learn, Streamlit", live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/", github: "https://github.com/sonuupahyaya/titanic-survival-predictor", icon: Terminal },
   { title: "🍽️ Restaurant Management System", desc: "Django-based restaurant management app with menu, booking, and order tracking.", tech: "Django, Python, SQLite", github: "https://github.com/sonuupahyaya/restaurant_management_project", icon: Code },
   { title: "💳 Credit Card Fraud Detection", desc: "ML model for detecting fraudulent transactions with SMOTE and classifiers.", tech: "Python, Pandas, Scikit-learn", github: "https://github.com/sonuupahyaya/Credit-Card-Fraud-Detection-Model", icon: Award },
+  { title: "⚖️ Legal Aid App", desc: "A web platform to connect users with lawyers and get AI-based legal suggestions.", tech: "React, Django, REST API, CSS", live: "https://legal-aid-app-three.vercel.app/", github: "https://github.com/sonuupahyaya/legal-aid-app", icon: Code },
+  { title: "📝 Note App Project", desc: "Full-stack note management web app for creating, updating, and deleting notes.", tech: "Flask, HTML, CSS, SQLite", live: "https://note-app-project-1.onrender.com/", github: "https://github.com/sonuupahyaya/note_app_project", icon: Code },
+  { title: "🛍️ Gatsby E-commerce Theme", desc: "A sleek, fast, and customizable e-commerce template built with Gatsby and GraphQL.", tech: "Gatsby, React, GraphQL, CSS", live: "https://frabjous-rolypoly-228243.netlify.app/", github: "https://github.com/sonuupahyaya/gatsby-ecommerce-theme", icon: Code },
+  { title: "💡 JobQuest – Smart Job Finder", desc: "A React-based platform that fetches live job data via REST API for smart job searching.", tech: "React, REST API, Vite", live: "https://jobquest-smart-job-finder.vercel.app/", github: "https://github.com/sonuupahyaya/jobquest-smart-job-finder", icon: Briefcase },
+  { title: "🔐 SecureVault Password Manager", desc: "Password Manager with encryption, CRUD, and hashing using Flask and Cryptography.", tech: "Flask, SQLite, Cryptography, Bcrypt", github: "https://github.com/sonuupahyaya/SecureVault", icon: Code },
+  { title: "📈 Crypto Trading Strategy App", desc: "Tracks lagged correlations between coins and executes strategy-based insights.", tech: "Python, Pandas, NumPy, Plotly", github: "https://github.com/sonuupahyaya/crypto-correlation-strategy", icon: TrendingUp },
 ];
+
 
 // --- Utility Components ---
 
@@ -278,13 +285,13 @@ const App = () => {
         <header className="hero-section flex flex-col items-center justify-center pt-32 pb-20 px-4 relative z-10">
           <div className="max-w-6xl w-full flex flex-col items-center justify-center relative z-20">
             <motion.img
-              src="https://placehold.co/180x180/0d0c1d/ffffff?text=SK"
+              src="/photo.jpg"
               alt="Sonu Kumar Photo"
               className="profile-image mb-8"
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
-              onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/180x180/0d0c1d/ffffff?text=SK"; }}
+              onError={(e) => { e.target.onerror = null; e.target.src = "/photo.jpg"; }}
             />
 
             {/* Name and Title */}
@@ -400,10 +407,41 @@ const App = () => {
                   <Award className="w-5 h-5 mr-3" /> Certifications
                 </h3>
                 <div className="flex flex-wrap gap-3 ml-4">
-                  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center"><CheckCircle className="w-3 h-3 mr-1" /> Python (GFG)</span>
-                  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center"><CheckCircle className="w-3 h-3 mr-1" /> Java (GFG)</span>
-                  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center"><CheckCircle className="w-3 h-3 mr-1" /> Django (BI)</span>
-                </div>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Python (GFG)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Java (GFG)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Django (BI)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> UI/UX Design Fundamentals (Google)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Figma for Beginners (Coursera)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Adobe Photoshop Essentials (Udemy)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Canva Masterclass (Skillshare)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> User Experience Research (Google UX)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Prototyping with Figma (Coursera)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Visual Design & Typography (LinkedIn)
+  </span>
+  <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Graphic Design Basics (Coursera)
+  </span>
+</div>
+
               </motion.div>
             </div>
           </div>
@@ -415,7 +453,7 @@ const App = () => {
         <section className="py-20 bg-black border-t border-gray-900">
           <div className="max-w-7xl mx-auto px-6">
             <h2 className="text-5xl font-black text-white mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-magenta-400 to-cyan-400">
-              PROJECT DATABASES 
+              PROJECTS
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((proj, i) => (
