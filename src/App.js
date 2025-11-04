@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 // Icons using Lucide React
@@ -19,6 +19,7 @@ const hardSkills = [
 ];
 
 const projects = [
+ 
   { title: "💼 Data Science Salary Predictor", desc: "Predicts DS salaries using XGBoost model. Input job details, get instant salary estimates.", tech: "Python, Pandas, XGBoost, Streamlit", live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/", github: "https://github.com/sonuupahyaya/Salary-Predictor", icon: Briefcase },
   { title: "📊 Demand Forecasting Web App", desc: "Forecasts demand with Prophet/ARIMA & interactive dashboards for inventory optimization.", tech: "Streamlit, Prophet, ARIMA, Pandas", live: "https://demandforecastproject-thqparu4ibghczx4ooxpmc.streamlit.app/", github: "https://github.com/sonuupahyaya/demand_forecast_project", icon: TrendingUp },
   { title: "🚢 Titanic Survival Predictor", desc: "Predicts passenger survival using Logistic Regression with Streamlit interface.", tech: "Python, Scikit-learn, Streamlit", live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/", github: "https://github.com/sonuupahyaya/titanic-survival-predictor", icon: Terminal },
@@ -30,10 +31,71 @@ const projects = [
   { title: "💡 JobQuest – Smart Job Finder", desc: "A React-based platform that fetches live job data via REST API for smart job searching.", tech: "React, REST API, Vite", live: "https://sprightly-gumdrop-f69acc.netlify.app/", github: "https://github.com/sonuupahyaya/jobquest-smart-job-finder", icon: Briefcase },
   { title: "🔐 SecureVault Password Manager", desc: "Password Manager with encryption, CRUD, and hashing using Flask and Cryptography.", tech: "Flask, SQLite, Cryptography, Bcrypt", github: "https://github.com/sonuupahyaya/SecureVault", icon: Code },
   { title: "📈 Crypto Trading Strategy App", desc: "Tracks lagged correlations between coins and executes strategy-based insights.", tech: "Python, Pandas, NumPy, Plotly", github: "https://github.com/sonuupahyaya/crypto-correlation-strategy", icon: TrendingUp },
+  { title: "🏏 Bat-Ball RL Agent", desc: "A Reinforcement Learning-based interactive cricket simulation where an AI-controlled bat agent learns to hit the ball.", tech: "Python, Streamlit, NumPy, Matplotlib, Q-Learning", live: "https://bat-ballrl-frvu6awc3p9gwegjidjqzy.streamlit.app/", github: "https://github.com/sonuupahyaya/bat-ballRL", icon: Terminal },
 ];
 
 
+
 // --- Utility Components ---
+
+// Star Colors reflecting stellar classification: O/B (Blue), A (White), G (Yellow), K/M (Orange/Red)
+const STAR_COLORS = [
+    '#FFFFFF', // White/A-type star
+    '#ADD8E6', // Light Blue/B-type star
+    '#FFA07A', // Light Salmon/Orange/K-type star
+    '#FFD700', // Gold/Yellow/G-type star
+    '#FF4500', // Orange-Red/M-type star
+];
+
+/**
+ * 🌠 Star Component (The actual twinkle dot)
+ */
+const Star = ({ top, left, size, color, animationDelay, duration }) => (
+    <div
+        className="absolute rounded-full star-twinkle"
+        style={{
+            top: `${top}%`,
+            left: `${left}%`,
+            width: `${size}px`,
+            height: `${size}px`,
+            backgroundColor: color,
+            boxShadow: `0 0 ${size * 2}px ${color}`,
+            animationDelay: `${animationDelay}s`,
+            animationDuration: `${duration}s`,
+        }}
+    />
+);
+
+/**
+ * 🌌 Background Component (Generates the star field)
+ */
+const StarsBackground = ({ numStars = 150 }) => {
+    // Generate stars only once on mount
+    const stars = useMemo(() => {
+        const generatedStars = [];
+        for (let i = 0; i < numStars; i++) {
+            generatedStars.push({
+                top: Math.random() * 100, // 0 to 100%
+                left: Math.random() * 100, // 0 to 100%
+                size: Math.random() * 4 + 2, // ✨ Changed: 2px to 6px (previously 1px to 3px) ✨
+                color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+                // Varying delay and duration for a more natural twinkle effect
+                animationDelay: Math.random() * 4, // 0 to 4s
+                duration: Math.random() * 3 + 1, // 1s to 4s
+            });
+        }
+        return generatedStars;
+    }, [numStars]);
+
+    return (
+        <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+            {stars.map((star, index) => (
+                <Star key={index} {...star} />
+            ))}
+        </div>
+    );
+};
+
 
 // Skill Item component with 3D animation effect
 const SkillBar3D = ({ skill, delay }) => {
@@ -168,6 +230,9 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-black text-gray-100 font-inter main-grid-background relative overflow-x-hidden">
+      
+      {/* 🌠 ADD THE TWINKLING STAR BACKGROUND HERE 🌠 */}
+      <StarsBackground numStars={250} />
 
       {/* GLOBAL STYLES (CRITICAL FOR VISUAL EFFECTS) */}
       <style jsx global>{`
@@ -188,6 +253,22 @@ const App = () => {
           from { background-position: 0% 0%; }
           to { background-position: 500px 500px; }
         }
+
+        /* 🌠 TWINKLE ANIMATION FOR STARS 🌠 */
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.5; }
+        }
+        .star-twinkle {
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            animation-name: twinkle;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
 
         /* Hero Section Gradient - Atmospheric Glow */
         .hero-section {
@@ -274,7 +355,7 @@ const App = () => {
 
       {/* MAIN CONTENT WRAPPER FOR 3D MOUSE TILT */}
       <div 
-        className="transform-gpu will-change-transform"
+        className="transform-gpu will-change-transform relative z-10" // Added z-10 here
         style={{
             transform: `perspective(1500px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
             transition: 'transform 0.5s ease-out',
@@ -420,25 +501,49 @@ const App = () => {
     <CheckCircle className="w-3 h-3 mr-1" /> UI/UX Design Fundamentals (Google)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> Figma for Beginners (Coursera)
+    <CheckCircle className="w-3 h-3 mr-1" /> React.js (Coursera)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> Adobe Photoshop Essentials (Udemy)
+    <CheckCircle className="w-3 h-3 mr-1" /> Angular.js (Udemy)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> Canva Masterclass (Skillshare)
+    <CheckCircle className="w-3 h-3 mr-1" /> ionic (Skillshare)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> User Experience Research (Google UX)
+    <CheckCircle className="w-3 h-3 mr-1" /> node.js (Google UX)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> Prototyping with Figma (Coursera)
+    <CheckCircle className="w-3 h-3 mr-1" /> react native (Coursera)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> Visual Design & Typography (LinkedIn)
+    <CheckCircle className="w-3 h-3 mr-1" /> Vue.js (LinkedIn)
   </span>
   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
-    <CheckCircle className="w-3 h-3 mr-1" /> Graphic Design Basics (Coursera)
+    <CheckCircle className="w-3 h-3 mr-1" /> Next.js (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Bootstrap (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Tailwind CSS (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Render (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> vercel (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> GitHub (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> Scikit-learn (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> XGBoost (Coursera)
+  </span>
+   <span className="px-3 py-1 text-xs font-medium bg-green-900/50 text-green-300 rounded-full flex items-center">
+    <CheckCircle className="w-3 h-3 mr-1" /> LightGBM (Coursera)
   </span>
 </div>
 
