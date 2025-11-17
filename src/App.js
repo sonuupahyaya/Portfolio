@@ -20,7 +20,7 @@ const hardSkills = [
 
 const projects = [
  
-  { title: "💼 Data Science Salary Predictor", desc: "Predicts DS salaries using XGBoost model. Input job details, get instant salary estimates.", tech: "Python, Pandas, XGBoost, Streamlit", live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/", github: "https://github.com/sonuupahyaya/Salary-Predictor", icon: Briefcase },
+   { title: "💼 Data Science Salary Predictor", desc: "Predicts DS salaries using XGBoost model. Input job details, get instant salary estimates.", tech: "Python, Pandas, XGBoost, Streamlit", live: "https://salary-predictor-vykduych8bxqrq8t69szrm.streamlit.app/", github: "https://github.com/sonuupahyaya/Salary-Predictor", icon: Briefcase },
   { title: "📊 Demand Forecasting Web App", desc: "Forecasts demand with Prophet/ARIMA & interactive dashboards for inventory optimization.", tech: "Streamlit, Prophet, ARIMA, Pandas", live: "https://demandforecastproject-thqparu4ibghczx4ooxpmc.streamlit.app/", github: "https://github.com/sonuupahyaya/demand_forecast_project", icon: TrendingUp },
   { title: "🚢 Titanic Survival Predictor", desc: "Predicts passenger survival using Logistic Regression with Streamlit interface.", tech: "Python, Scikit-learn, Streamlit", live: "https://titanic-survival-predictor-l6szzooityaqk5jdyqn9pt.streamlit.app/", github: "https://github.com/sonuupahyaya/titanic-survival-predictor", icon: Terminal },
   { title: "🍽️ Restaurant Management System", desc: "Django-based restaurant management app with menu, booking, and order tracking.", tech: "Django, Python, SQLite", github: "https://github.com/sonuupahyaya/restaurant_management_project", icon: Code },
@@ -31,7 +31,10 @@ const projects = [
   { title: "💡 JobQuest – Smart Job Finder", desc: "A React-based platform that fetches live job data via REST API for smart job searching.", tech: "React, REST API, Vite", live: "https://sprightly-gumdrop-f69acc.netlify.app/", github: "https://github.com/sonuupahyaya/jobquest-smart-job-finder", icon: Briefcase },
   { title: "🔐 SecureVault Password Manager", desc: "Password Manager with encryption, CRUD, and hashing using Flask and Cryptography.", tech: "Flask, SQLite, Cryptography, Bcrypt", github: "https://github.com/sonuupahyaya/SecureVault", icon: Code },
   { title: "📈 Crypto Trading Strategy App", desc: "Tracks lagged correlations between coins and executes strategy-based insights.", tech: "Python, Pandas, NumPy, Plotly", github: "https://github.com/sonuupahyaya/crypto-correlation-strategy", icon: TrendingUp },
-  { title: "🏏 Bat-Ball RL Agent", desc: "A Reinforcement Learning-based interactive cricket simulation where an AI-controlled bat agent learns to hit the ball.", tech: "Python, Streamlit, NumPy, Matplotlib, Q-Learning", live: "https://bat-ballrl-frvu6awc3p9gwegjidjqzy.streamlit.app/", github: "https://github.com/sonuupahyaya/bat-ballRL", icon: Terminal },
+  { title: "💪 AI Fitness & Nutrition Planner", desc: "AI-powered fitness, nutrition, meal, and workout planning system with ML calorie prediction and dynamic splits.", tech: "Python, Flask, Machine Learning, HTML, CSS, Chart.js", live: "https://fitness-planner-xxj8.onrender.com/", github: "https://github.com/sonuupahyaya/fitness_planner", icon: Code },
+  { title: "🏏 Bat-Ball RL Agent", desc: "Reinforcement Learning cricket simulation where an AI-controlled bat learns timing and accuracy through Q-Learning.", tech: "Python, Streamlit, NumPy, Matplotlib, RL", live: "https://bat-ballrl-frvu6awc3p9gwegjidjqzy.streamlit.app/", github: "https://github.com/sonuupahyaya/bat-ballRL", icon: Terminal },
+
+  
 ];
 
 
